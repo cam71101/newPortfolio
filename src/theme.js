@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     h2: {
       textTransform: "capitalize",
       lineHeight: "1.25",
-      marginBottom: "0.75rem",
+      // marginBottom: "0.75rem",
       fontWeight: 700,
     },
     h4: {
@@ -21,8 +21,10 @@ const theme = createMuiTheme({
     h3: {
       fontWeight: 700,
     },
+    h5: {
+      fontWeight: 100,
+    },
     subtitle1: {
-      marginTop: "1rem",
       marginBottom: "1.25rem",
       fontFamily: "Karla",
     },

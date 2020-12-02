@@ -1,9 +1,10 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Markdown from "markdown-to-jsx"
 import { Typography } from "@material-ui/core"
 import { withStyles, makeStyles } from "@material-ui/core/styles"
+import Title from "../components/Title"
 
 import SEO from "../components/SEO"
 
@@ -15,7 +16,7 @@ const styles = makeStyles(theme => ({
   },
   containter: {
     width: "90vw",
-    maxWidth: "80rem",
+    maxWidth: "40rem",
   },
   listItem: {
     marginTop: theme.spacing(1),
@@ -30,42 +31,58 @@ const options = {
     h1: {
       component: Typography,
       props: {
-        gutterBottom: true,
         variant: "h2",
         align: "center",
       },
     },
     h2: {
       component: Typography,
-      props: { gutterBottom: true, variant: "h4", align: "center" },
+      props: {
+        gutterBottom: true,
+        variant: "h5",
+        align: "center",
+        color: "secondary",
+      },
+    },
+    h5: {
+      component: Typography,
+      props: { variant: "h5" },
     },
     p: {
       component: Typography,
       props: { paragraph: true, variant: "subtitle1" },
     },
-    // li: {
-    //   component: withStyles(styles)(({ classes, ...props }) => (
-    //     <li className={classes.listItem}>
-    //       <Typography component="span" {...props} />
-    //     </li>
-    //   )),
-    // },
   },
 }
 
 const BlogPage = ({ data }) => {
-  const { content, title, desc } = data.blog
+  const { content, title, desc, subtitle, image, pathname } = data.blog
   const classes = styles()
+
+  const imageResize = image.childImageSharp.resize
 
   return (
     <Layout>
-      <SEO title={title} description={desc} />
+      <SEO
+        title={title}
+        description={subtitle}
+        image={imageResize}
+        pathname={pathname}
+      />
       <section className={classes.root}>
         <div className={classes.containter}>
           <article>
+            <Title title={title}></Title>
+            <Typography
+              gutterBottom
+              variant="h5"
+              align="center"
+              color="secondary"
+            >
+              {subtitle}
+            </Typography>
             <Markdown options={options}>{content}</Markdown>
           </article>
-          <Link to="/blogs"> blog</Link>
         </div>
       </section>
     </Layout>
@@ -78,6 +95,16 @@ export const query = graphql`
       content
       title
       desc
+      subtitle
+      image {
+        childImageSharp {
+          resize(width: 1200) {
+            src
+            height
+            width
+          }
+        }
+      }
     }
   }
 `

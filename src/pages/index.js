@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core"
 import { Button } from "@material-ui/core"
 import { Link } from "gatsby"
 import SEO from "../components/SEO"
+import { graphql } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,7 +61,7 @@ export default function Index() {
 
   return (
     <Layout>
-      <SEO title="Home" description="Home page" />
+      <SEO title="Home" description="Home page" image />
       <div className={classes.root}>
         <Typography variant={"h1"} className={classes.text} key={1}>
           I'm David Fisher. <br />A <span>Software Developer</span> living in
@@ -82,3 +83,17 @@ export default function Index() {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          excerpt
+        }
+      }
+    }
+  }
+`

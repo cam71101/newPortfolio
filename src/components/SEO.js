@@ -1,6 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
-import { useStaticQuery, graphq } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import PropTypes from "prop-types"
 
 const query = graphql`
   {
@@ -11,12 +12,13 @@ const query = graphql`
         siteUrl
         twitterUsername
         author
+        image
       }
     }
   }
 `
 
-const SEO = ({ title, description }) => {
+const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
   const { site } = useStaticQuery(query)
   const {
     siteDesc,
@@ -24,12 +26,120 @@ const SEO = ({ title, description }) => {
     siteUrl,
     image,
     twitterUsername,
+    author,
   } = site.siteMetadata
+
+  // const image =
+  //   metaImage && metaImage.src
+  //     ? `${site.siteMetadata.siteUrl}${metaImage.src}`
+  //     : null
+
+  const imageMan = metaImage
+    ? `${site.siteMetadata.siteUrl}${metaImage.src}`
+    : `${siteUrl}${image}`
+
+  const canonical = pathname ? `${siteUrl}${pathname}` : null
   return (
-    <Helmet htmlAttributes={{ lang: "en" }} title={`${title} | ${siteTitle}`}>
-      <meta name="description" content={description || siteDesc} />
+    <Helmet
+      htmlAttributes={{ lang: "en" }}
+      title={`${title} | ${siteTitle}`}
+      titleTemplate={`%s | ${siteTitle}`}
+      link={
+        canonical
+          ? [
+              {
+                rel: "canonical",
+                href: canonical,
+              },
+            ]
+          : []
+      }
+      meta={[
+        {
+          name: `description`,
+          content: description,
+        },
+        {
+          property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:description`,
+          content: description,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:creator`,
+          content: author,
+        },
+        {
+          name: `twitter:title`,
+          content: title,
+        },
+        {
+          name: `twitter:description`,
+          content: description,
+        },
+      ]
+        .concat(
+          metaImage
+            ? [
+                {
+                  property: "og:image",
+                  content: imageMan,
+                },
+                {
+                  property: "og:image:width",
+                  content: metaImage.width,
+                },
+                {
+                  property: "og:image:height",
+                  content: metaImage.height,
+                },
+                {
+                  name: "twitter:card",
+                  content: "summary_large_image",
+                },
+              ]
+            : [
+                {
+                  name: "twitter:card",
+                  content: "summary",
+                },
+              ]
+        )
+        .concat(meta)}
+    >
+      {/* <meta name="description" content={description || siteDesc} /> */}
+      {/* <meta name="image" content={image} /> */}
+      {/* <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:creator" content={twitterUsername} />
+      <meta name="twitter:title" content={siteTitle} />
+      <meta name="twitter:description" content={siteDesc} /> */}
+      {/* <meta name="twitter:image" content={`${siteUrl}${image}`} /> */}
     </Helmet>
   )
+}
+
+SEO.defaultProps = {
+  lang: `en`,
+  meta: [],
+  description: ``,
+}
+
+SEO.propTypes = {
+  description: PropTypes.string,
+  lang: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+  }),
 }
 
 export default SEO
