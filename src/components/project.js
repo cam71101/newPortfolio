@@ -1,11 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Image from "gatsby-image"
-import GitHubIcon from "@material-ui/icons/GitHub"
+// import GitHubIcon from "@material-ui/icons/GitHub"
 import { makeStyles } from "@material-ui/core/styles"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import { Button } from "@material-ui/core"
-import SkillTag from "./SkillTag"
+import { Link } from "gatsby"
+// import { Button } from "@material-ui/core"
+
+// import SkillTag from "./SkillTag"
 
 import { Typography } from "@material-ui/core"
 
@@ -21,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   projectImg: {
-    height: "30rem",
+    height: "31rem",
     gridColumn: "1/5",
     gridRow: "1/6",
     [theme.breakpoints.down("md")]: {
@@ -65,18 +67,19 @@ const Project = ({ description, title, github, stack, url, image, index }) => {
         <Typography variant={"subtitle1"} className={classes.description}>
           {description}
         </Typography>
-        <Typography className={classes.stack}>
+        {/* <Typography className={classes.stack}>
           {stack.map(item => {
             return <SkillTag key={item.id}>{item.title}</SkillTag>
           })}
-        </Typography>
+        </Typography> */}
         <div className={classes.projectLinks}>
-          <Button href={github} target="_blank">
+          {/* <Button href={github} target="_blank">
             <GitHubIcon fontSize="small" />
-          </Button>
-          <Button href={url} target="_blank">
-            <ExitToAppIcon fontSize="medium" />
-          </Button>
+          </Button> */}
+          <Link to={"/" + title}>
+            <ExitToAppIcon fontSize="small" />
+            Learn more
+          </Link>
         </div>
       </div>
     </article>

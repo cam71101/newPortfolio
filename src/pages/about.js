@@ -9,7 +9,6 @@ import Markdown from "markdown-to-jsx"
 import LinkedInIcon from "@material-ui/icons/LinkedIn"
 import EmailIcon from "@material-ui/icons/Email"
 import GitHubIcon from "@material-ui/icons/GitHub"
-import { Link } from "gatsby"
 import { Button } from "@material-ui/core"
 import SEO from "../components/SEO"
 

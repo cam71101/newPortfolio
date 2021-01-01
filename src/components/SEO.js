@@ -17,22 +17,18 @@ const query = graphql`
     }
   }
 `
+// const cardImage = node.front
 
 const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
   const { site } = useStaticQuery(query)
+
   const {
     siteDesc,
     siteTitle,
     siteUrl,
     image,
     twitterUsername,
-    author,
   } = site.siteMetadata
-
-  // const image =
-  //   metaImage && metaImage.src
-  //     ? `${site.siteMetadata.siteUrl}${metaImage.src}`
-  //     : null
 
   const imageMan = metaImage
     ? `${site.siteMetadata.siteUrl}${metaImage.src}`
@@ -65,7 +61,7 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
         },
         {
           property: `og:description`,
-          content: description,
+          content: siteDesc,
         },
         {
           property: `og:type`,
@@ -73,7 +69,7 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
         },
         {
           name: `twitter:creator`,
-          content: author,
+          content: twitterUsername,
         },
         {
           name: `twitter:title`,
@@ -106,9 +102,25 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
               ]
             : [
                 {
-                  name: "twitter:card",
-                  content: "summary",
+                  property: "og:image",
+                  content: imageMan,
                 },
+                {
+                  property: "og:image:width",
+                  content: image.width,
+                },
+                {
+                  property: "og:image:height",
+                  content: image.height,
+                },
+                {
+                  name: "twitter:card",
+                  content: "summary_large_image",
+                },
+                // {
+                //   name: "twitter:image",
+                //   content: imageMan,
+                // },
               ]
         )
         .concat(meta)}

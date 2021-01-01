@@ -11,21 +11,30 @@ module.exports = {
     author: "@DavidFisher",
     twitterUsername: "@d_fisherWebDev",
     siteUrl: "https://d-fisher.com/",
-    image: "/twitter-img.png",
+    image: "/twitter.png",
   },
   plugins: [
-    "gatsby-plugin-top-layout",
+    // "gatsby-plugin-top-layout",
+    // "gatsby-plugin-material-ui",
+    // `gatsby-theme-material-ui`,
+    // "gatsby-plugin-layout",
     {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        stylesProvider: {
-          injectFirst: true,
-        },
-      },
+      resolve: `gatsby-plugin-scroll-reveal`,
+      // options: {
+      //   threshold: 1, // Percentage of an element's area that needs to be visible to launch animation
+      //   once: true, // Defines if animation needs to be launched once
+      //   disable: false, // Flag for disabling animations
+
+      //   // Advanced Options
+      //   selector: "[data-sal]", // Selector of the elements to be animated
+      //   animateClassName: "sal-animate", // Class name which triggers animation
+      //   disabledClassName: "sal-disabled", // Class name which defines the disabled state
+      //   rootMargin: "0% 50%", // Corresponds to root's bounding box margin
+      //   enterEventName: "sal:in", // Enter event name
+      //   exitEventName: "sal:out", // Exit event name
+      // },
     },
-    `gatsby-plugin-styled-components`,
     "gatsby-plugin-sitemap",
-    // "gatsby-plugin-social-cards",
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -47,14 +56,13 @@ module.exports = {
               query: { site, allStrapiBlogs, allMarkdownRemark },
             }) => {
               const blogs = allStrapiBlogs.nodes.map((node, index) => {
-                console.log(node.date)
                 return Object.assign({}, node, {
                   description: node.desc,
                   date: node.date,
                   url: site.siteMetadata.siteUrl + "/blogs/" + node.slug,
                   guid: site.siteMetadata.siteUrl + "/blogs/" + node.slug,
                   custom_elements: [
-                    { "content:encoded": "test" },
+                    { "content:encoded": "none" },
                     { category: node.category },
                     {
                       featuredImage:
@@ -75,9 +83,7 @@ module.exports = {
             },
             query: `
                 {
-                  allStrapiBlogs (
-                    sort: { order: DESC, fields: id },
-                  )  { 
+                  allStrapiBlogs (sort: {fields: date, order: DESC})  { 
                     nodes {
                       slug
                       id
@@ -95,9 +101,7 @@ module.exports = {
                       }
                     }
                   }
-                  allMarkdownRemark  (
-                    sort: { order: DESC, fields: id },
-                  ){
+                  allMarkdownRemark  (sort: {fields: frontmatter___date, order: DESC}){
                   edges {
                     node {
                       html
@@ -171,20 +175,40 @@ module.exports = {
         // Plugins configs
         plugins: [
           {
-            resolve: `gatsby-remark-twitter-cards`,
+            resolve: `gatsby-remark-images`,
             options: {
-              title: "anti/pattern", // website title
-              separator: "|", // default
-              author: "alessia bellisario",
-              // background: require.resolve("./content/assets/base.png"), // path to 1200x630px file or hex code, defaults to black (#000000)
-              fontColor: "#228B22", // defaults to white (#ffffff)
-              titleFontSize: 96, // default
-              subtitleFontSize: 60, // default
-              fontStyle: "monospace", // default
-              // fontFile: require.resolve("./assets/fonts/someFont.ttf"), // will override fontStyle - path to custom TTF font
-              useFrontmatterSlug: false, // default, if true it will use the slug defined in the post frontmatter
+              quality: 100,
             },
           },
+          {
+            resolve: "gatsby-plugin-social-cards",
+            options: {
+              // ommit to skip
+              authorImage: "./static/profile_pic.png",
+              // image to use when no cover in frontmatter
+              backgroundImage: "./static/profile_pic.png",
+              // author to use when no auth in frontmatter
+              defaultAuthor: "David Fisher",
+              // card design
+              design: "default", // 'default' or 'card'
+            },
+          },
+          // { resolve: `gatsby-remark-social-cards` },
+          // {
+          //   resolve: `gatsby-remark-twitter-cards`,
+          //   options: {
+          //     title: "anti/pattern", // website title
+          //     separator: "|", // default
+          //     author: "alessia bellisario",
+          //     background: require.resolve("./src/assets/base.png"), // path to 1200x630px file or hex code, defaults to black (#000000)
+          //     fontColor: "#228B22", // defaults to white (#ffffff)
+          //     titleFontSize: 96, // default
+          //     subtitleFontSize: 60, // default
+          //     fontStyle: "monospace", // default
+          //     // fontFile: require.resolve("./assets/fonts/someFont.ttf"), // will override fontStyle - path to custom TTF font
+          //     useFrontmatterSlug: false, // default, if true it will use the slug defined in the post frontmatter
+          //   },
+          // },
         ],
       },
     },

@@ -7,7 +7,7 @@ import SEO from "../components/SEO"
 
 export const query = graphql`
   {
-    allStrapiProjects {
+    allStrapiProjects(sort: { fields: Priority, order: ASC }) {
       nodes {
         github
         id

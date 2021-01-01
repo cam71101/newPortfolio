@@ -61,16 +61,14 @@ Global Styles
   padding: 0;
   box-sizing: border-box;
 }
-html {
-  font: 400 18px Rubik;
-}
-
 body {
-  background: white;
+  font-family: var(--ff-secondary);
+  background: var(--clr-white);
+  color: var(--clr-grey-1);
   line-height: 1.5;
   font-size: 0.875rem;
+  margin-top: 5rem;
 }
-
 ul {
   list-style-type: none;
 }
@@ -78,7 +76,7 @@ a {
   text-decoration: none;
 }
 
-/* h1,
+h1,
 h2,
 h3,
 h4 {
@@ -127,9 +125,7 @@ p {
     line-height: 1;
   }
 }
-*/
-*/
-/*  global classes
+/*  global classes */
 
 .btn {
   text-transform: uppercase;

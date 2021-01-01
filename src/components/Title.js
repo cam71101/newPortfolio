@@ -6,7 +6,9 @@ import Underline from "./Underline"
 const useStyles = makeStyles(theme => ({
   title: {
     marginBottom: "1rem",
-    textAlign: "center",
+    alignSelf: "flex-start",
+    marginLeft: "4rem",
+    marginBottom: "4rem",
   },
 }))
 
@@ -17,7 +19,7 @@ const Title = ({ title, size }) => {
       <Typography variant={size ? size : "h2"}>
         {title || "default title"}
       </Typography>
-      <Underline />
+      {/* <Underline /> */}
     </div>
   )
 }

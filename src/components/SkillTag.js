@@ -12,6 +12,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: ".5rem",
     letterSpacing: "2px",
     textTransform: "uppercase",
+    textAlign: "center",
+    fontSize: "1rem",
   },
 }))
 

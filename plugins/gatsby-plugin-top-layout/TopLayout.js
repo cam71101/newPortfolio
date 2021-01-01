@@ -3,13 +3,10 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import { ThemeProvider } from "@material-ui/core/styles"
-import theme from "../../src/theme"
-
-import { createGenerateId, JssProvider } from "react-jss"
-
-const generateId = createGenerateId()
+import theme from "../../src/gatsby-theme-material-ui-top-layout/theme"
 
 export default function TopLayout(props) {
+  console.log(theme)
   return (
     <React.Fragment>
       <Helmet>
@@ -18,17 +15,15 @@ export default function TopLayout(props) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
         <link
-          href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap"
+          href="https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap"
           rel="stylesheet"
         />
       </Helmet>
-      <JssProvider generateId={generateId}>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {props.children}
-        </ThemeProvider>
-      </JssProvider>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        {props.children}
+      </ThemeProvider>
     </React.Fragment>
   )
 }

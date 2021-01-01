@@ -14,11 +14,15 @@ import SkillTag from "./SkillTag"
 const useStyles = makeStyles({
   root: {
     maxWidth: "26rem",
+    marginBottom: "2rem",
   },
   media: {
     height: 140,
   },
-  tag: {},
+  content: {
+    height: 110,
+    marginBottom: "1rem",
+  },
 })
 
 const Blog = ({ id, title, image, date, category, slug, desc }) => {
@@ -34,7 +38,7 @@ const Blog = ({ id, title, image, date, category, slug, desc }) => {
               className="blog-img"
             ></Image>
           )}
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
               {title}
             </Typography>

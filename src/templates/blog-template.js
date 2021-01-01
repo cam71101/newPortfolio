@@ -2,9 +2,11 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Markdown from "markdown-to-jsx"
+import ReactMarkdown from "react-markdown"
 import { Typography } from "@material-ui/core"
-import { withStyles, makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/core/styles"
 import Title from "../components/Title"
+import gfm from "remark-gfm"
 
 import SEO from "../components/SEO"
 
@@ -52,22 +54,34 @@ const options = {
       component: Typography,
       props: { paragraph: true, variant: "subtitle1" },
     },
+    img: {
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "50%",
+    },
+  },
+  namedCodesToUnicode: {
+    le: "\u2264",
+    ge: "\u2265",
   },
 }
 
-const BlogPage = ({ data }) => {
-  const { content, title, desc, subtitle, image, pathname } = data.blog
+const BlogPage = ({ data, location }) => {
+  const { content, title, subtitle, image, pathname } = data.blog
   const classes = styles()
 
   const imageResize = image.childImageSharp.resize
+
+  console.log(content)
 
   return (
     <Layout>
       <SEO
         title={title}
         description={subtitle}
-        image={imageResize}
-        pathname={pathname}
+        // image={imageResize}
+        pathname={location.pathname}
       />
       <section className={classes.root}>
         <div className={classes.containter}>
@@ -82,6 +96,11 @@ const BlogPage = ({ data }) => {
               {subtitle}
             </Typography>
             <Markdown options={options}>{content}</Markdown>
+            {/* <ReactMarkdown
+              plugins={[gfm]}
+              children={content}
+              className={options}
+            /> */}
           </article>
         </div>
       </section>

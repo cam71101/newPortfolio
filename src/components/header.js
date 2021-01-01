@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button"
 import { Typography } from "@material-ui/core"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import { useTheme } from "@material-ui/core/styles"
-import { Link, graphql, useStaticQuery } from "gatsby"
+import { Link } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +55,7 @@ export default function ButtonAppBar(props) {
             )}
           </Button>
         </Link>
-        <div className={classes.buttons}>
+        {/* <div className={classes.buttons}>
           <Link to="/projects" className={classes.link}>
             <Button className={classes.button} onClick={props.projects}>
               Projects
@@ -72,7 +72,7 @@ export default function ButtonAppBar(props) {
               About
             </Button>
           </Link>
-        </div>
+        </div> */}
       </Toolbar>
     </div>
   )

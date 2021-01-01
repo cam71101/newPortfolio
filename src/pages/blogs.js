@@ -8,7 +8,7 @@ import SEO from "../components/SEO"
 
 export const query = graphql`
   {
-    allStrapiBlogs {
+    allStrapiBlogs(sort: { fields: date, order: DESC }) {
       nodes {
         slug
         id
@@ -28,28 +28,44 @@ export const query = graphql`
   }
 `
 
-const useStyles = makeStyles(theme => ({}))
-
 const Blogs = ({ data }) => {
   const {
     allStrapiBlogs: { nodes: blogs },
   } = data
 
   const useStyles = makeStyles(theme => ({
-    root: {
+    rootBlogs: {
       minHeight: "calc(100vh - 5rem - 9rem)",
       padding: "4rem 0",
+    },
+    blogContainer: {
+      width: "90vw",
+      margin: "0 auto",
+      maxWidth: "80rem",
+      marginTop: "3rem",
+      [theme.breakpoints.up("sm")]: {
+        width: "95vw",
+        display: "grid",
+        gridTemplateColumns: "repeat( auto-fill, minmax(368px, 1fr))",
+        rowGap: "2rem",
+        columnGap: "2rem",
+      },
+    },
+    blog: {
+      marginBottom: "2rem",
     },
   }))
 
   const classes = useStyles()
 
+  // "section-center blogs-center"
+
   return (
     <Layout>
       <SEO title="Blog" description="Blogs" />
-      <section className={classes.root}>
+      <section className={classes.rootBlogs}>
         <Title title="Blog"></Title>
-        <div className="section-center blogs-center">
+        <div className={classes.blogContainer}>
           {blogs.map(blog => {
             return <Blog key={blog.id} {...blog} />
           })}
