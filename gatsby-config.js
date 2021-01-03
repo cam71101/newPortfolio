@@ -124,13 +124,13 @@ module.exports = {
       },
     },
     "gatsby-plugin-react-helmet",
-    {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: [`Karla`, `Rubik`],
-        display: "swap",
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-google-fonts`,
+    //   options: {
+    //     fonts: [`Karla`, `Rubik`],
+    //     display: "swap",
+    //   },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -156,7 +156,7 @@ module.exports = {
       resolve: "gatsby-source-strapi",
       options: {
         apiURL: process.env.API_URL || "http://localhost:1337",
-        contentTypes: ["projects", "blogs"],
+        contentTypes: ["projects", "blogs", "project-pages"],
         singleTypes: ["about"],
         queryLimit: 1000,
       },
@@ -224,18 +224,6 @@ module.exports = {
         icon: `src/assets/favicon/android-chrome-512x512.png`,
       },
     },
-
-    // {
-    //   resolve: `gatsby-plugin-react-helmet-canonical-urls`,
-    //   options: {
-    //     siteUrl: `https://d-fisher.com`,
-
-    //     // Query string parameters are inclued by default.
-    //     // Set `stripQueryString: true` if you don't want `/blog`
-    //     // and `/blog?tag=foobar` to be indexed separately
-    //     stripQueryString: true,
-    //   },
-    // },
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-offline",

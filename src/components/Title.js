@@ -1,25 +1,19 @@
 import React from "react"
-import { Typography } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
-import Underline from "./Underline"
 
-const useStyles = makeStyles(theme => ({
-  title: {
-    marginBottom: "1rem",
-    alignSelf: "flex-start",
-    marginLeft: "4rem",
-    marginBottom: "4rem",
-  },
-}))
+import "fontsource-rubik"
 
 const Title = ({ title, size }) => {
-  const classes = useStyles()
   return (
-    <div className={classes.title}>
-      <Typography variant={size ? size : "h2"}>
-        {title || "default title"}
-      </Typography>
-      {/* <Underline /> */}
+    <div
+      className="section-title"
+      data-sal="fade"
+      data-sal-delay="350"
+      data-sal-easing="ease"
+      data-sal-duration="1000"
+    >
+      <h1>
+        <span>{title || "default title"}</span>
+      </h1>
     </div>
   )
 }

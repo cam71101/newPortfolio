@@ -2,11 +2,9 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Markdown from "markdown-to-jsx"
-import ReactMarkdown from "react-markdown"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import Title from "../components/Title"
-import gfm from "remark-gfm"
 
 import SEO from "../components/SEO"
 
@@ -68,35 +66,18 @@ const options = {
 }
 
 const BlogPage = ({ data, location }) => {
-  const { content, title, subtitle, image, pathname } = data.blog
-  const classes = styles()
-
-  const imageResize = image.childImageSharp.resize
-
-  console.log(content)
+  const { content, title, subtitle } = data.blog
 
   return (
     <Layout>
-      <SEO
-        title={title}
-        description={subtitle}
-        // image={imageResize}
-        pathname={location.pathname}
-      />
-      <section className={classes.root}>
-        <div className={classes.containter}>
-          <article>
-            <Title title={title}></Title>
-            <Typography
-              gutterBottom
-              variant="h5"
-              align="center"
-              color="secondary"
-            >
-              {subtitle}
-            </Typography>
-            <Markdown options={options}>{content}</Markdown>
-            {/* <ReactMarkdown
+      <SEO title={title} description={subtitle} pathname={location.pathname} />
+      <section className="blog-template">
+        <div className="section-center-blog">
+          <article className="blog-content">
+            <h1>{title}</h1>
+            <h2>{subtitle}</h2>
+            <Markdown>{content}</Markdown>
+            {/* <ReactMarkdow
               plugins={[gfm]}
               children={content}
               className={options}

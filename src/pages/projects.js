@@ -1,6 +1,6 @@
 import React from "react"
 import Title from "../components/Title"
-import Project from "../components/project"
+import Project from "../components/Project"
 import Layout from "../components/layout"
 import { makeStyles } from "@material-ui/core/styles"
 import SEO from "../components/SEO"

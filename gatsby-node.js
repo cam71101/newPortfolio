@@ -3,6 +3,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
+
   const result = await graphql(`
     {
       blogs: allStrapiBlogs {
@@ -19,6 +20,26 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve(`src/templates/blog-template.js`),
       context: {
         slug: blog.slug,
+      },
+    })
+  })
+
+  const results = await graphql(`
+    {
+      projectpages: allStrapiProjectPages {
+        nodes {
+          Slug
+        }
+      }
+    }
+  `)
+
+  results.data.projectpages.nodes.forEach(project => {
+    createPage({
+      path: `/${project.Slug}`,
+      component: path.resolve(`src/templates/project-template.js`),
+      context: {
+        Slug: project.Slug,
       },
     })
   })

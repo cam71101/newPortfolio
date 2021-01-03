@@ -1,25 +1,15 @@
 import React from "react"
 import "../styles/global.css"
 
-import Header from "./header"
-import Footer from "./footer"
-import { makeStyles } from "@material-ui/core/styles"
+import "fontsource-rubik"
+import "fontsource-karla"
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    "& body": {
-      background: "white",
-      lineHeight: 1.5,
-      fontSize: "0.875rem",
-      marginTop: "5rem",
-    },
-  },
-}))
+import Footer from "./Footer"
+import Header from "./Header"
 
 const Layout = props => {
-  const classes = useStyles()
   return (
-    <div className={classes.root}>
+    <div style={{ background: props.colour }} className="layout">
       <Header />
       {props.children}
       <Footer />

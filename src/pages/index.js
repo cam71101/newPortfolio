@@ -7,10 +7,16 @@ import Projects from "../components/Projects"
 import About from "../components/About"
 import Blogs from "../components/Blogs"
 
+// import "fontsource-rubik"
+
 export default function Index({ data }) {
   const {
     allStrapiProjects: { nodes: projects },
   } = data
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Layout>
@@ -31,6 +37,7 @@ export const query = graphql`
         description
         title
         url
+        link
         stack {
           id
           title
