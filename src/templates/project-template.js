@@ -1,19 +1,50 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
+import Layout from "../components/Layout"
 import Markdown from "markdown-to-jsx"
-
-import Title from "../components/Title"
-import Image from "gatsby-image"
 import GitHubIcon from "@material-ui/icons/GitHub"
+import Img from "gatsby-image"
+import Button from "@material-ui/core/Button"
 
 import SEO from "../components/SEO"
 import OtherProjects from "../components/OtherProjects"
 import IconComp from "../components/IconComp"
+import Modal from "../components/Modal"
 
 import WebAssetIcon from "@material-ui/icons/WebAsset"
 
 const ProjectPage = ({ data, location }) => {
+  // const [openImage, setOpenImage] = React.useState("none")
+  // const [openImageTwo, setOpenImageTwo] = React.useState("none")
+
+  const [openImageOne, setOpenImageOne] = React.useState(false)
+  const [openImageTwo, setOpenImageTwo] = React.useState(false)
+  const [openImageThree, setOpenImageThree] = React.useState(false)
+
+  const handleOpenImageOne = () => {
+    setOpenImageOne(true)
+  }
+
+  const handleOpenImageTwo = () => {
+    setOpenImageTwo(true)
+  }
+
+  const handleOpenImageThree = () => {
+    setOpenImageThree(true)
+  }
+
+  const handleCloseImageOne = () => {
+    setOpenImageOne(false)
+  }
+
+  const handleCloseImageTwo = () => {
+    setOpenImageTwo(false)
+  }
+
+  const handleCloseImageThree = () => {
+    setOpenImageThree(false)
+  }
+
   const {
     title,
     description,
@@ -29,6 +60,18 @@ const ProjectPage = ({ data, location }) => {
     lessons,
     features,
     durationProject,
+    designImageOne,
+    designImageTwo,
+    designImageTitle,
+    codeSnippetOne,
+    codeSnippetTwo,
+    codeSnippetThree,
+    codeSnippetTextOne,
+    codeSnippetTextTwo,
+    codeSnippetTextThree,
+    codeSnippetTitleOne,
+    codeSnippetTitleTwo,
+    codeSnippetTitleThree,
   } = data.project
 
   const projects = data.allStrapiProjects.nodes
@@ -43,7 +86,37 @@ const ProjectPage = ({ data, location }) => {
     window.scrollTo(0, 0)
   }, [])
 
-  console.log(secondImage)
+  // const handleImgOneButton = () => {
+  //   if (openImage === "none") {
+  //     setOpenImage("inline")
+  //   } else {
+  //     setOpenImage("none")
+  //   }
+  // }
+
+  // const handleImgTwoButton = () => {
+  //   if (openImageTwo === "none") {
+  //     setOpenImageTwo("inline")
+  //   } else {
+  //     setOpenImageTwo("none")
+  //   }
+  // }
+
+  const thirdImageComp = (
+    <div
+      className="project-page-img-responsive-container"
+      data-sal="slide-right"
+      data-sal-delay="100"
+      data-sal-easing="ease"
+      data-sal-duration="1000"
+    >
+      <img
+        src={thirdImage.publicURL}
+        className="project-page-img-responsive"
+        alt="third"
+      />
+    </div>
+  )
 
   return (
     <Layout colour={"white"}>
@@ -54,27 +127,28 @@ const ProjectPage = ({ data, location }) => {
             <h1>{title}</h1>
             <Markdown>{description}</Markdown>
           </div>
-          <div className="project-page-time">
-            <h5>TIME SPENT ON PROJECT</h5>
-            <Markdown>{durationProject}</Markdown>
+          <div className="project-headings">
+            <div className="project-page-time">
+              <h5>TIME SPENT ON PROJECT</h5>
+              <Markdown>{durationProject}</Markdown>
+            </div>
+            <div className="project-page-type">
+              <h5>TYPE</h5>
+              <p>Personal</p>
+            </div>
+            <div className="project-page-github">
+              <h5>REPOSITORY</h5>
+              <a href={github} rel="noreferrer noopener" target="_blank">
+                <GitHubIcon fontSize="large" />
+              </a>
+            </div>
+            <div className="project-page-url">
+              <h5>LIVE LINK</h5>
+              <a href={url} rel="noreferrer noopener" target="_blank">
+                <WebAssetIcon fontSize="large" />
+              </a>
+            </div>
           </div>
-          <div className="project-page-type">
-            <h5>TYPE</h5>
-            <p>Personal</p>
-          </div>
-          <div className="project-page-github">
-            <h5>REPOSITORY</h5>
-            <a href={github} target="_blank">
-              <GitHubIcon fontSize="large" />
-            </a>
-          </div>
-          <div className="project-page-url">
-            <h5>LIVE LINK</h5>
-            <a href={url} target="_blank">
-              <WebAssetIcon fontSize="large" />
-            </a>
-          </div>
-
           <img
             src={firstImage.publicURL}
             data-sal="slide-right"
@@ -82,6 +156,7 @@ const ProjectPage = ({ data, location }) => {
             data-sal-easing="ease"
             data-sal-duration="1000"
             className="project-page-img-first"
+            alt="first"
           />
 
           <div className="project-page-features">
@@ -91,21 +166,57 @@ const ProjectPage = ({ data, location }) => {
             ))}
           </div>
 
-          <div className="project-page-tech-list">
-            {tech.map((v, index) => {
-              return <IconComp key={index} title={v.title} />
-            })}
-          </div>
-
           <div className="project-page-goal">
             <h2>Project Goal</h2>
             <Markdown>{goalDesc}</Markdown>
           </div>
 
-          <div className="project-page-tech">
-            <h2>Technologies</h2>
-            <Markdown>{stackDescr}</Markdown>
-          </div>
+          {designImageTitle ? (
+            <div className="project-page-design-img-container">
+              <h2>{designImageTitle}</h2>
+              <img
+                src={designImageTwo.publicURL}
+                className="project-page-design-img-one"
+                alt="designImageTwo"
+                data-sal="slide-right"
+                data-sal-delay="100"
+                data-sal-easing="ease"
+                data-sal-duration="1000"
+              />
+              <img
+                src={designImageOne.publicURL}
+                className="project-page-design-img-one"
+                alt="designImageTwo"
+                data-sal="slide-right"
+                data-sal-delay="100"
+                data-sal-easing="ease"
+                data-sal-duration="1000"
+              />
+              <div className="project-page-technologies">
+                <div className="project-page-tech">
+                  <h2>Technologies</h2>
+                  <Markdown>{stackDescr}</Markdown>
+                </div>
+                <div className="project-page-tech-list">
+                  {tech.map((v, index) => {
+                    return <IconComp key={index} title={v.title} />
+                  })}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <React.Fragment>
+              <div className="project-page-tech">
+                <h2>Technologies</h2>
+                <Markdown>{stackDescr}</Markdown>
+              </div>
+              <div className="project-page-tech-list">
+                {tech.map((v, index) => {
+                  return <IconComp key={index} title={v.title} />
+                })}
+              </div>
+            </React.Fragment>
+          )}
 
           <div className="project-page-hurdles">
             <h2>Technical Hurdles & Solutions</h2>
@@ -119,19 +230,47 @@ const ProjectPage = ({ data, location }) => {
             data-sal-delay="100"
             data-sal-easing="ease"
             data-sal-duration="1000"
+            alt="second"
           />
-          <div
-            className="project-page-img-responsive-container"
-            data-sal="slide-right"
-            data-sal-delay="100"
-            data-sal-easing="ease"
-            data-sal-duration="1000"
-          >
-            <img
-              src={thirdImage.publicURL}
-              className="project-page-img-responsive"
-            />
-          </div>
+
+          {codeSnippetOne ? (
+            <div className="project-page-code-responsive">
+              {thirdImageComp}
+              <h2>Code Snippets</h2>
+              <div className="project-page-code-container">
+                <Modal
+                  open={openImageOne}
+                  handleOpen={() => handleOpenImageOne()}
+                  handleClose={() => handleCloseImageOne()}
+                  img={codeSnippetOne.publicURL}
+                  title={codeSnippetTitleOne}
+                  text={codeSnippetTextOne}
+                />
+                {codeSnippetTwo ? (
+                  <Modal
+                    open={openImageTwo}
+                    handleOpen={() => handleOpenImageTwo()}
+                    handleClose={() => handleCloseImageTwo()}
+                    img={codeSnippetTwo.publicURL}
+                    title={codeSnippetTitleTwo}
+                    text={codeSnippetTextTwo}
+                  />
+                ) : null}
+                {codeSnippetThree ? (
+                  <Modal
+                    open={openImageThree}
+                    handleOpen={() => handleOpenImageThree()}
+                    handleClose={() => handleCloseImageThree()}
+                    img={codeSnippetThree.publicURL}
+                    title={codeSnippetTitleThree}
+                    text={codeSnippetTextThree}
+                  />
+                ) : null}
+              </div>
+            </div>
+          ) : (
+            thirdImageComp
+          )}
 
           <div className="project-page-lessons">
             <h2>Lessons Learned</h2>
@@ -187,6 +326,33 @@ export const query = graphql`
       github
       type
       title
+      designImageOne {
+        publicURL
+      }
+      designImageTitle
+      designImageTwo {
+        publicURL
+      }
+      codeSnippetOne {
+        childImageSharp {
+          fluid(quality: 100) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
+        publicURL
+      }
+      codeSnippetTwo {
+        publicURL
+      }
+      codeSnippetThree {
+        publicURL
+      }
+      codeSnippetTitleOne
+      codeSnippetTitleTwo
+      codeSnippetTitleThree
+      codeSnippetTextOne
+      codeSnippetTextTwo
+      codeSnippetTextThree
       tech {
         id
         title

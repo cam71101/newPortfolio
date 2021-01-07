@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles"
 import Modal from "@material-ui/core/Modal"
 import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
+import Button from "@material-ui/core/Button"
+import Markdown from "markdown-to-jsx"
+import CloseIcon from "@material-ui/icons/Close"
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -10,22 +13,27 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  gif: {
-    width: "60rem",
-  },
 }))
 
-export default function TransitionsModal({ open, handleClose, gif }) {
+export default function TransitionsModal({
+  open,
+  handleOpen,
+  handleClose,
+  img,
+  title,
+  text,
+}) {
   const classes = useStyles()
 
   return (
-    <div>
+    <React.Fragment>
+      <Button
+        type="button"
+        onClick={handleOpen}
+        className="btn center-btn sal-animate"
+      >
+        {title}
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -39,15 +47,18 @@ export default function TransitionsModal({ open, handleClose, gif }) {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
-            <img
-              src={gif.childImageSharp.fluid}
-              alt="gif"
-              className={classes.gif}
-            />
+          <div className="modal-container">
+            <CloseIcon className="close-icon" onClick={handleClose} />
+            <div className="modal-text-container">
+              <div className="modal-text">
+                <h3>{title}</h3>
+                <Markdown>{text}</Markdown>
+              </div>
+            </div>
+            <img src={img} className="project-page-code-img-one" />
           </div>
         </Fade>
       </Modal>
-    </div>
+    </React.Fragment>
   )
 }

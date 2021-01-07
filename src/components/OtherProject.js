@@ -20,7 +20,7 @@ const Project = ({ description, title, github, stack, url, image, index }) => {
 
   return (
     <section
-      className="project"
+      className="project-other"
       data-sal="slide-down"
       data-sal-delay="100"
       data-sal-easing="ease"
@@ -34,10 +34,10 @@ const Project = ({ description, title, github, stack, url, image, index }) => {
       <div className="project-info">
         <h3>{title || "default title"}</h3>
         <p className="project-description">{description}</p>
-        <Link to={"/" + title}>
-          <div className="project-links">Learn more > &nbsp;</div>
-        </Link>
       </div>
+      <Link to={"/" + title}>
+        <div className="project-links">Learn more > &nbsp;</div>
+      </Link>
     </section>
   )
 }

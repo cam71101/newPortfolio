@@ -34,7 +34,7 @@ const Project = ({ description, title, image, link }) => {
       <div className="project-info">
         <h3>{title || "default title"}</h3>
         <p className="project-description">{description}</p>
-        <Link to={"/" + title}>
+        <Link to={"/" + link}>
           <div className="project-links">Learn more > &nbsp;</div>
         </Link>
       </div>
