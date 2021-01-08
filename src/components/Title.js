@@ -4,13 +4,7 @@ import "fontsource-rubik"
 
 const Title = ({ title, size }) => {
   return (
-    <div
-      className="section-title"
-      data-sal="fade"
-      data-sal-delay="350"
-      data-sal-easing="ease"
-      data-sal-duration="1000"
-    >
+    <div className="section-title">
       <h1>
         <span>{title || "default title"}</span>
       </h1>

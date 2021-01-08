@@ -6,9 +6,7 @@ import GitHubIcon from "@material-ui/icons/GitHub"
 import LinkedInIcon from "@material-ui/icons/LinkedIn"
 import TwitterIcon from "@material-ui/icons/Twitter"
 
-import "../styles/global.css"
-
-const Footer = () => {
+const Footer = ({ logo }) => {
   return (
     <footer className="footer-container">
       <div className="footer-contact">
@@ -26,7 +24,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-links">
-        <Logo />
+        <Logo logo={logo} />
         <Button href={"https://github.com/cam71101"} target="_blank">
           <GitHubIcon fontSize="large" />
         </Button>

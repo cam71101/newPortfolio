@@ -14,26 +14,53 @@ module.exports = {
     image: "/twitter.png",
   },
   plugins: [
+    {
+      resolve: "gatsby-plugin-page-transitions",
+      options: {
+        transitionTime: 800,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-scroll-reveal`,
+      options: {
+        threshold: 0.2, // Percentage of an element's area that needs to be visible to launch animation
+        once: true, // Defines if animation needs to be launched once
+        disable: false, // Flag for disabling animations
+
+        // Advanced Options
+        // selector: "[data-sal]", // Selector of the elements to be animated
+        // animateClassName: "sal-animate", // Class name which triggers animation
+        // disabledClassName: "sal-disabled", // Class name which defines the disabled state
+        // rootMargin: "0% 50%", // Corresponds to root's bounding box margin
+        // enterEventName: "sal:in", // Enter event name
+        // exitEventName: "sal:out", // Exit event name
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`karla`],
+        display: "swap",
+      },
+    },
+
+    // {
+    //   resolve: `gatsby-plugin-global-styles`,
+    //   options: {
+    //     pathToConfigModule: `src/styles/GlobalStyleComponent`,
+    //     props: {
+    //       other: {
+    //         light: true,
+    //       },
+    //     },
+    //   },
+    // },
     // "gatsby-plugin-top-layout",
     // "gatsby-plugin-material-ui",
     // `gatsby-theme-material-ui`,
     // "gatsby-plugin-layout",
-    {
-      resolve: `gatsby-plugin-scroll-reveal`,
-      // options: {
-      //   threshold: 1, // Percentage of an element's area that needs to be visible to launch animation
-      //   once: true, // Defines if animation needs to be launched once
-      //   disable: false, // Flag for disabling animations
 
-      //   // Advanced Options
-      //   selector: "[data-sal]", // Selector of the elements to be animated
-      //   animateClassName: "sal-animate", // Class name which triggers animation
-      //   disabledClassName: "sal-disabled", // Class name which defines the disabled state
-      //   rootMargin: "0% 50%", // Corresponds to root's bounding box margin
-      //   enterEventName: "sal:in", // Enter event name
-      //   exitEventName: "sal:out", // Exit event name
-      // },
-    },
+    "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-plugin-react-svg",
@@ -41,6 +68,41 @@ module.exports = {
         rule: {
           include: /\.inline\.svg$/,
         },
+      },
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        // CommonMark mode (default: true)
+        commonmark: true,
+        // Footnotes mode (default: true)
+        footnotes: true,
+        // Pedantic mode (default: true)
+        pedantic: true,
+        // GitHub Flavored Markdown mode (default: true)
+        gfm: true,
+        // Plugins configs
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              quality: 100,
+            },
+          },
+          {
+            resolve: "gatsby-plugin-social-cards",
+            options: {
+              // ommit to skip
+              authorImage: "./static/profile_pic.png",
+              // image to use when no cover in frontmatter
+              backgroundImage: "./static/profile_pic.png",
+              // author to use when no auth in frontmatter
+              defaultAuthor: "David Fisher",
+              // card design
+              design: "default", // 'default' or 'card'
+            },
+          },
+        ],
       },
     },
     {
@@ -120,25 +182,11 @@ module.exports = {
               `,
             output: "/rss.xml",
             title: `David's RSS Feed`,
-            // optional configuration to insert feed reference in pages:
-            // if `string` is used, it will be used to create RegExp and then test if pathname of
-            // current page satisfied this regular expression;
-            // if not provided or `undefined`, all pages will have feed reference inserted
-            // match: "^/blog/",
-            // optional configuration to specify external rss feed, such as feedburner
-            // link: "https://feeds.feedburner.com/gatsby/blog",
           },
         ],
       },
     },
-    "gatsby-plugin-react-helmet",
-    // {
-    //   resolve: `gatsby-plugin-google-fonts`,
-    //   options: {
-    //     fonts: [`Karla`, `Rubik`],
-    //     display: "swap",
-    //   },
-    // },
+
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -167,57 +215,6 @@ module.exports = {
         contentTypes: ["projects", "blogs", "project-pages"],
         singleTypes: ["about"],
         queryLimit: 1000,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        // CommonMark mode (default: true)
-        commonmark: true,
-        // Footnotes mode (default: true)
-        footnotes: true,
-        // Pedantic mode (default: true)
-        pedantic: true,
-        // GitHub Flavored Markdown mode (default: true)
-        gfm: true,
-        // Plugins configs
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              quality: 100,
-            },
-          },
-          {
-            resolve: "gatsby-plugin-social-cards",
-            options: {
-              // ommit to skip
-              authorImage: "./static/profile_pic.png",
-              // image to use when no cover in frontmatter
-              backgroundImage: "./static/profile_pic.png",
-              // author to use when no auth in frontmatter
-              defaultAuthor: "David Fisher",
-              // card design
-              design: "default", // 'default' or 'card'
-            },
-          },
-          // { resolve: `gatsby-remark-social-cards` },
-          // {
-          //   resolve: `gatsby-remark-twitter-cards`,
-          //   options: {
-          //     title: "anti/pattern", // website title
-          //     separator: "|", // default
-          //     author: "alessia bellisario",
-          //     background: require.resolve("./src/assets/base.png"), // path to 1200x630px file or hex code, defaults to black (#000000)
-          //     fontColor: "#228B22", // defaults to white (#ffffff)
-          //     titleFontSize: 96, // default
-          //     subtitleFontSize: 60, // default
-          //     fontStyle: "monospace", // default
-          //     // fontFile: require.resolve("./assets/fonts/someFont.ttf"), // will override fontStyle - path to custom TTF font
-          //     useFrontmatterSlug: false, // default, if true it will use the slug defined in the post frontmatter
-          //   },
-          // },
-        ],
       },
     },
     {

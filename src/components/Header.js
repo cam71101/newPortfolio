@@ -2,10 +2,10 @@ import React from "react"
 
 import Logo from "./Logo"
 
-export default function ButtonAppBar(props) {
+export default function ButtonAppBar({ logo }) {
   return (
     <div className="header-container">
-      <Logo />
+      <Logo logo={logo} />
     </div>
   )
 }

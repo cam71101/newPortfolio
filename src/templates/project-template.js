@@ -10,26 +10,29 @@ import SEO from "../components/SEO"
 import OtherProjects from "../components/OtherProjects"
 import IconComp from "../components/IconComp"
 import Modal from "../components/Modal"
+import PageTransition from "gatsby-v2-plugin-page-transitions"
+import { useMediaQuery } from "react-responsive"
 
 import WebAssetIcon from "@material-ui/icons/WebAsset"
 
 const ProjectPage = ({ data, location }) => {
-  // const [openImage, setOpenImage] = React.useState("none")
-  // const [openImageTwo, setOpenImageTwo] = React.useState("none")
-
   const [openImageOne, setOpenImageOne] = React.useState(false)
   const [openImageTwo, setOpenImageTwo] = React.useState(false)
   const [openImageThree, setOpenImageThree] = React.useState(false)
 
-  const handleOpenImageOne = () => {
-    setOpenImageOne(true)
+  const handleOpenImageOne = img => {
+    cacheImages([img.src]).then(value => {
+      setOpenImageOne(true)
+    })
   }
 
-  const handleOpenImageTwo = () => {
+  const handleOpenImageTwo = img => {
+    cacheImages([img.src])
     setOpenImageTwo(true)
   }
 
-  const handleOpenImageThree = () => {
+  const handleOpenImageThree = img => {
+    cacheImages([img.src])
     setOpenImageThree(true)
   }
 
@@ -82,30 +85,41 @@ const ProjectPage = ({ data, location }) => {
     return projectTitle !== pageTitle
   })
 
+  const cacheImages = async srcArray => {
+    const promises = await srcArray.map(src => {
+      return new Promise(function (resolve, reject) {
+        const img = new Image()
+        img.src = src
+        img.onLoad = resolve()
+        img.onError = reject()
+      })
+    })
+    await Promise.all(promises)
+  }
+
   React.useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
 
-  // const handleImgOneButton = () => {
-  //   if (openImage === "none") {
-  //     setOpenImage("inline")
-  //   } else {
-  //     setOpenImage("none")
-  //   }
-  // }
-
-  // const handleImgTwoButton = () => {
-  //   if (openImageTwo === "none") {
-  //     setOpenImageTwo("inline")
-  //   } else {
-  //     setOpenImageTwo("none")
-  //   }
-  // }
+    if (codeSnippetOne && codeSnippetTwo && codeSnippetThree) {
+      cacheImages([
+        codeSnippetOne.childImageSharp.fluid.src,
+        codeSnippetTwo.childImageSharp.fluid.src,
+        codeSnippetThree.childImageSharp.fluid.src,
+      ])
+    } else if (codeSnippetOne && codeSnippetTwo) {
+      cacheImages([
+        codeSnippetOne.childImageSharp.fluid.src,
+        codeSnippetTwo.childImageSharp.fluid.src,
+      ])
+    } else {
+      cacheImages([codeSnippetOne.childImageSharp.fluid.src])
+    }
+  }, [codeSnippetOne, codeSnippetTwo, codeSnippetThree])
 
   const thirdImageComp = (
     <div
       className="project-page-img-responsive-container"
-      data-sal="slide-right"
+      data-sal="fade"
       data-sal-delay="100"
       data-sal-easing="ease"
       data-sal-duration="1000"
@@ -119,80 +133,94 @@ const ProjectPage = ({ data, location }) => {
   )
 
   return (
-    <Layout colour={"white"}>
-      <section className="project-page">
-        <SEO title={title} pathname={location.pathname} />
-        <div className="project-page-center">
-          <div className="project-page-desc">
-            <h1>{title}</h1>
-            <Markdown>{description}</Markdown>
-          </div>
-          <div className="project-headings">
-            <div className="project-page-time">
-              <h5>TIME SPENT ON PROJECT</h5>
-              <Markdown>{durationProject}</Markdown>
+    <PageTransition>
+      <Layout colour={"white"}>
+        <section className="project-page">
+          <SEO title={title} pathname={location.pathname} />
+          <div className="project-page-center">
+            <div className="project-page-desc">
+              <h1>{title}</h1>
+              <Markdown>{description}</Markdown>
             </div>
-            <div className="project-page-type">
-              <h5>TYPE</h5>
-              <p>Personal</p>
+            <div className="project-headings">
+              <div className="project-page-time">
+                <h5>TIME SPENT ON PROJECT</h5>
+                <Markdown>{durationProject}</Markdown>
+              </div>
+              <div className="project-page-type">
+                <h5>TYPE</h5>
+                <p>Personal</p>
+              </div>
+              <div className="project-page-github">
+                <h5>REPOSITORY</h5>
+                <a href={github} rel="noreferrer noopener" target="_blank">
+                  <GitHubIcon fontSize="large" />
+                </a>
+              </div>
+              <div className="project-page-url">
+                <h5>LIVE LINK</h5>
+                <a href={url} rel="noreferrer noopener" target="_blank">
+                  <WebAssetIcon fontSize="large" />
+                </a>
+              </div>
             </div>
-            <div className="project-page-github">
-              <h5>REPOSITORY</h5>
-              <a href={github} rel="noreferrer noopener" target="_blank">
-                <GitHubIcon fontSize="large" />
-              </a>
-            </div>
-            <div className="project-page-url">
-              <h5>LIVE LINK</h5>
-              <a href={url} rel="noreferrer noopener" target="_blank">
-                <WebAssetIcon fontSize="large" />
-              </a>
-            </div>
-          </div>
-          <img
-            src={firstImage.publicURL}
-            data-sal="slide-right"
-            data-sal-delay="100"
-            data-sal-easing="ease"
-            data-sal-duration="1000"
-            className="project-page-img-first"
-            alt="first"
-          />
+            <img
+              src={firstImage.publicURL}
+              className="project-page-img-first"
+              alt="first"
+              data-sal="fade"
+              data-sal-delay="500"
+              data-sal-easing="ease"
+              data-sal-duration="800"
+            />
 
-          <div className="project-page-features">
-            <h2>Features</h2>
-            {features.map((feature, index) => (
-              <p key={index}>> {feature.title}</p>
-            ))}
-          </div>
+            <div className="project-page-features">
+              <h2>Features</h2>
+              {features.map((feature, index) => (
+                <p key={index}>> {feature.title}</p>
+              ))}
+            </div>
 
-          <div className="project-page-goal">
-            <h2>Project Goal</h2>
-            <Markdown>{goalDesc}</Markdown>
-          </div>
+            <div className="project-page-goal">
+              <h2>Project Goal</h2>
+              <Markdown>{goalDesc}</Markdown>
+            </div>
 
-          {designImageTitle ? (
-            <div className="project-page-design-img-container">
-              <h2>{designImageTitle}</h2>
-              <img
-                src={designImageTwo.publicURL}
-                className="project-page-design-img-one"
-                alt="designImageTwo"
-                data-sal="slide-right"
-                data-sal-delay="100"
-                data-sal-easing="ease"
-                data-sal-duration="1000"
-              />
-              <img
-                src={designImageOne.publicURL}
-                className="project-page-design-img-one"
-                alt="designImageTwo"
-                data-sal="slide-right"
-                data-sal-delay="100"
-                data-sal-easing="ease"
-                data-sal-duration="1000"
-              />
-              <div className="project-page-technologies">
+            {designImageTitle ? (
+              <div className="project-page-design-img-container">
+                <h2>{designImageTitle}</h2>
+                <img
+                  src={designImageTwo.publicURL}
+                  className="project-page-design-img-one"
+                  alt="design"
+                  data-sal="fade"
+                  data-sal-delay="100"
+                  data-sal-easing="ease"
+                  data-sal-duration="1000"
+                />
+                <img
+                  src={designImageOne.publicURL}
+                  className="project-page-design-img-one"
+                  alt="design"
+                  data-sal="fade"
+                  data-sal-delay="100"
+                  data-sal-easing="ease"
+                  data-sal-duration="1000"
+                />
+                <div className="project-page-technologies">
+                  <div className="project-page-tech">
+                    <h2>Technologies</h2>
+                    <Markdown>{stackDescr}</Markdown>
+                  </div>
+                  <div className="project-page-tech-list">
+                    {tech.map((v, index) => {
+                      return <IconComp key={index} title={v.title} />
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <React.Fragment>
                 <div className="project-page-tech">
                   <h2>Technologies</h2>
                   <Markdown>{stackDescr}</Markdown>
@@ -202,88 +230,76 @@ const ProjectPage = ({ data, location }) => {
                     return <IconComp key={index} title={v.title} />
                   })}
                 </div>
-              </div>
+              </React.Fragment>
+            )}
+
+            <div className="project-page-hurdles">
+              <h2>Technical Hurdles & Solutions</h2>
+              <Markdown>{hurdlesDesc}</Markdown>
             </div>
-          ) : (
-            <React.Fragment>
-              <div className="project-page-tech">
-                <h2>Technologies</h2>
-                <Markdown>{stackDescr}</Markdown>
-              </div>
-              <div className="project-page-tech-list">
-                {tech.map((v, index) => {
-                  return <IconComp key={index} title={v.title} />
-                })}
-              </div>
-            </React.Fragment>
-          )}
 
-          <div className="project-page-hurdles">
-            <h2>Technical Hurdles & Solutions</h2>
-            <Markdown>{hurdlesDesc}</Markdown>
-          </div>
+            <img
+              src={secondImage.publicURL}
+              className="project-page-img-second"
+              data-sal="fade"
+              data-sal-delay="100"
+              data-sal-easing="ease"
+              data-sal-duration="1000"
+              alt="second"
+            />
 
-          <img
-            src={secondImage.publicURL}
-            className="project-page-img-second"
-            data-sal="slide-right"
-            data-sal-delay="100"
-            data-sal-easing="ease"
-            data-sal-duration="1000"
-            alt="second"
-          />
-
-          {codeSnippetOne ? (
-            <div className="project-page-code-responsive">
-              {thirdImageComp}
-              <h2>Code Snippets</h2>
-              <div className="project-page-code-container">
-                <Modal
-                  open={openImageOne}
-                  handleOpen={() => handleOpenImageOne()}
-                  handleClose={() => handleCloseImageOne()}
-                  img={codeSnippetOne.publicURL}
-                  title={codeSnippetTitleOne}
-                  text={codeSnippetTextOne}
-                />
-                {codeSnippetTwo ? (
+            {codeSnippetOne ? (
+              <div className="project-page-code-responsive">
+                {thirdImageComp}
+                <h2>Code Snippets</h2>
+                <div className="project-page-code-container">
                   <Modal
-                    open={openImageTwo}
-                    handleOpen={() => handleOpenImageTwo()}
-                    handleClose={() => handleCloseImageTwo()}
-                    img={codeSnippetTwo.publicURL}
-                    title={codeSnippetTitleTwo}
-                    text={codeSnippetTextTwo}
+                    open={openImageOne}
+                    handleOpen={img => handleOpenImageOne(img)}
+                    handleClose={() => handleCloseImageOne()}
+                    img={codeSnippetOne.childImageSharp.fluid}
+                    title={codeSnippetTitleOne}
+                    text={codeSnippetTextOne}
                   />
-                ) : null}
-                {codeSnippetThree ? (
-                  <Modal
-                    open={openImageThree}
-                    handleOpen={() => handleOpenImageThree()}
-                    handleClose={() => handleCloseImageThree()}
-                    img={codeSnippetThree.publicURL}
-                    title={codeSnippetTitleThree}
-                    text={codeSnippetTextThree}
-                  />
-                ) : null}
+                  {codeSnippetTwo ? (
+                    <Modal
+                      open={openImageTwo}
+                      handleOpen={img => handleOpenImageTwo(img)}
+                      handleClose={() => handleCloseImageTwo()}
+                      img={codeSnippetTwo.childImageSharp.fluid}
+                      title={codeSnippetTitleTwo}
+                      text={codeSnippetTextTwo}
+                    />
+                  ) : null}
+                  {codeSnippetThree ? (
+                    <Modal
+                      open={openImageThree}
+                      handleOpen={img => handleOpenImageThree(img)}
+                      handleClose={() => handleCloseImageThree()}
+                      img={codeSnippetThree.childImageSharp.fluid}
+                      title={codeSnippetTitleThree}
+                      text={codeSnippetTextThree}
+                    />
+                  ) : null}
+                </div>
               </div>
+            ) : (
+              thirdImageComp
+            )}
+
+            <div className="project-page-lessons">
+              <h2>Lessons Learned</h2>
+              <Markdown>{lessons}</Markdown>
             </div>
-          ) : (
-            thirdImageComp
-          )}
 
-          <div className="project-page-lessons">
-            <h2>Lessons Learned</h2>
-            <Markdown>{lessons}</Markdown>
+            <div className="project-page-projects">
+              <h2>Other Projects</h2>
+              <OtherProjects projects={filteredProjects} />
+            </div>
           </div>
-
-          <div className="project-page-projects">
-            <h2>Other Projects</h2>
-            <OtherProjects projects={filteredProjects} />
-          </div>
-        </div>
-      </section>
-    </Layout>
+        </section>
+      </Layout>
+    </PageTransition>
   )
 }
 
@@ -311,7 +327,7 @@ export const query = graphql`
       thirdImage {
         childImageSharp {
           fixed(quality: 100) {
-            ...GatsbyImageSharpFixed
+            ...GatsbyImageSharpFixed_noBase64
           }
         }
         publicURL
@@ -335,16 +351,26 @@ export const query = graphql`
       }
       codeSnippetOne {
         childImageSharp {
-          fluid(quality: 100) {
+          fluid {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
         publicURL
       }
       codeSnippetTwo {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
         publicURL
       }
       codeSnippetThree {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
         publicURL
       }
       codeSnippetTitleOne
@@ -364,6 +390,7 @@ export const query = graphql`
         id
         description
         title
+        link
         stack {
           id
           title
@@ -371,7 +398,7 @@ export const query = graphql`
         image {
           childImageSharp {
             fluid(quality: 100) {
-              ...GatsbyImageSharpFluid
+              ...GatsbyImageSharpFluid_noBase64
             }
           }
         }

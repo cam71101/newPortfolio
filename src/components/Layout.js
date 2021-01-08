@@ -1,19 +1,19 @@
 import React from "react"
+import PageTransition from "gatsby-v2-plugin-page-transitions"
+
 import "../styles/global.css"
-
-import "fontsource-rubik"
-import "fontsource-karla"
-
 import Footer from "./Footer"
 import Header from "./Header"
 
 const Layout = props => {
   return (
-    <div style={{ background: props.colour }} className="layout">
-      <Header />
-      {props.children}
-      <Footer />
-    </div>
+    <PageTransition>
+      <div style={{ background: props.colour }} className="layout">
+        <Header logo={props.logoFixed} />
+        {props.children}
+        <Footer logo={props.logoFixed} />
+      </div>
+    </PageTransition>
   )
 }
 

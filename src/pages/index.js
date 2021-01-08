@@ -1,14 +1,10 @@
 import React from "react"
 import Layout from "../components/Layout"
 
-
 import SEO from "../components/SEO"
-
 import Projects from "../components/Projects"
 import About from "../components/About"
 import Blogs from "../components/Blogs"
-
-// import "fontsource-rubik"
 
 export default function Index({ data }) {
   const {
@@ -20,7 +16,11 @@ export default function Index({ data }) {
   }, [])
 
   return (
-    <Layout>
+    <Layout
+      logo={data.about.nodes[0].logo.childImageSharp.fluid}
+      logoFixed={data.about.nodes[0].logo.childImageSharp.fixed}
+      logoURL={data.about.nodes[0].logo.publicURL}
+    >
       <SEO title="Home" description="Home page" />
       <About data={data.about.nodes[0]} />
       <Projects projects={projects} />
@@ -52,8 +52,21 @@ export const query = graphql`
         }
       }
     }
+
     about: allStrapiAbout {
       nodes {
+        logo {
+          id
+          childImageSharp {
+            fluid(quality: 50) {
+              ...GatsbyImageSharpFluid_noBase64
+            }
+            fixed(width: 130) {
+              ...GatsbyImageSharpFixed_noBase64
+            }
+          }
+          publicURL
+        }
         stack {
           id
           title

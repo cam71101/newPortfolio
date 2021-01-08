@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade"
 import Button from "@material-ui/core/Button"
 import Markdown from "markdown-to-jsx"
 import CloseIcon from "@material-ui/icons/Close"
+import Img from "gatsby-image"
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -25,11 +26,25 @@ export default function TransitionsModal({
 }) {
   const classes = useStyles()
 
+  const cacheImages = async srcArray => {
+    const promises = await srcArray.map(src => {
+      return new Promise(function (resolve, reject) {
+        const img = new Image()
+        img.src = src.src
+        img.onLoad = resolve()
+        img.onError = reject()
+      })
+    })
+    await Promise.all(promises)
+  }
+
+  cacheImages([img])
+
   return (
     <React.Fragment>
       <Button
         type="button"
-        onClick={handleOpen}
+        onClick={img => handleOpen(img)}
         className="btn center-btn sal-animate"
       >
         {title}
@@ -55,7 +70,7 @@ export default function TransitionsModal({
                 <Markdown>{text}</Markdown>
               </div>
             </div>
-            <img src={img} className="project-page-code-img-one" />
+            <Img fluid={img} className="project-page-code-img-one" />
           </div>
         </Fade>
       </Modal>

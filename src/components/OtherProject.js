@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 
 import posed from "react-pose"
 
-const Project = ({ description, title, github, stack, url, image, index }) => {
+const Project = ({ description, title, image, link }) => {
   const Box = posed.div({
     hoverable: true,
     init: {
@@ -26,7 +26,7 @@ const Project = ({ description, title, github, stack, url, image, index }) => {
       data-sal-easing="ease"
       data-sal-duration="1000"
     >
-      <Link to={"/" + title.toLowerCase()}>
+      <Link to={"/" + link}>
         <Box>
           <Image fluid={image.childImageSharp.fluid} className="project-img" />
         </Box>
@@ -35,7 +35,7 @@ const Project = ({ description, title, github, stack, url, image, index }) => {
         <h3>{title || "default title"}</h3>
         <p className="project-description">{description}</p>
       </div>
-      <Link to={"/" + title}>
+      <Link to={"/" + link}>
         <div className="project-links">Learn more > &nbsp;</div>
       </Link>
     </section>

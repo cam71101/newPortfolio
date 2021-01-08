@@ -214,7 +214,7 @@ p {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows:
-    3rem auto auto 22rem auto auto auto
+    3rem auto 40rem 22rem auto auto auto
     1fr;
   column-gap: 5rem;
   row-gap: 8rem;
@@ -408,9 +408,7 @@ p {
   right: 2rem;
   top: 1rem;
   cursor: pointer;
-}
-
-.close-icon:hover {
+  z-index: 1;
 }
 
 .project-page-code-container button:hover {
@@ -467,6 +465,13 @@ p {
 .modal-text-container a:hover {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 1400px) {
+  .modal-text-container {
+    grid-row: 4 / 6;
+  }
+}
+
 .modal-text {
   display: flex;
   background: rgb(219, 232, 250);
@@ -556,6 +561,7 @@ p {
   grid-column: 1 / -1;
   max-width: 100%;
   height: auto;
+  margin-bottom: 7rem;
 }
 
 .project-page-lessons {
