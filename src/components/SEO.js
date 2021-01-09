@@ -17,13 +17,11 @@ const query = graphql`
     }
   }
 `
-// const cardImage = node.front
-
 const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
   const { site } = useStaticQuery(query)
 
   const {
-    siteDesc,
+    siteDescription,
     siteTitle,
     siteUrl,
     image,
@@ -35,6 +33,7 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
     : `${siteUrl}${image}`
 
   const canonical = pathname ? `${siteUrl}${pathname}` : null
+
   return (
     <Helmet
       htmlAttributes={{ lang: "en" }}
@@ -61,7 +60,7 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
         },
         {
           property: `og:description`,
-          content: siteDesc,
+          content: siteDescription,
         },
         {
           property: `og:type`,
@@ -117,22 +116,10 @@ const SEO = ({ title, description, meta, image: metaImage, pathname }) => {
                   name: "twitter:card",
                   content: "summary_large_image",
                 },
-                // {
-                //   name: "twitter:image",
-                //   content: imageMan,
-                // },
               ]
         )
         .concat(meta)}
-    >
-      {/* <meta name="description" content={description || siteDesc} /> */}
-      {/* <meta name="image" content={image} /> */}
-      {/* <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content={twitterUsername} />
-      <meta name="twitter:title" content={siteTitle} />
-      <meta name="twitter:description" content={siteDesc} /> */}
-      {/* <meta name="twitter:image" content={`${siteUrl}${image}`} /> */}
-    </Helmet>
+    ></Helmet>
   )
 }
 

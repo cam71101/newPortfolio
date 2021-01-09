@@ -6,7 +6,6 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import theme from "../../src/gatsby-theme-material-ui-top-layout/theme"
 
 export default function TopLayout(props) {
-  console.log(theme)
   return (
     <React.Fragment>
       <Helmet>

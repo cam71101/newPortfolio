@@ -45,12 +45,12 @@ Global Styles
 }
 body {
   font-family: "Karla";
-  background: var(--clr-grey-10);
+  /* background: var(--clr-grey-10); */
   color: var(--clr-grey-1);
   line-height: 1.5;
   font-size: 0.875rem;
-  /* margin-top: 5rem; */
 }
+
 ul {
   list-style-type: none;
 }
@@ -61,6 +61,54 @@ a {
 
 .about-page a:hover {
   text-decoration: underline;
+}
+
+.about-page p {
+  animation: fadeIn ease 2s;
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2s;
+  -ms-animation: fadeIn ease 2s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 h1,
@@ -204,7 +252,7 @@ p {
 }
 
 .layout {
-  padding-top: 5rem;
+  padding-top: 9rem;
 }
 
 .project-page-center {
@@ -700,7 +748,7 @@ Projects
 }
 
 .projects {
-  background: white;
+  background: var(--clr-grey-10);
   padding-top: 2rem;
 }
 
@@ -759,8 +807,7 @@ Projects
   opacity: 0;
 }
 .project-info {
-  background: var(--clr-white);
-
+  background: var(--clr-grey-10);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   grid-row: 2 / -1;
@@ -963,9 +1010,10 @@ Pages
 .about-page,
 .contact-page,
 .project-page {
-  background: var(--clr-grey-10);
+  /* background: var(--clr-grey-10); */
   min-height: calc(100vh - 5rem - 9rem);
 }
+
 .project-page {
   background: white;
   padding-top: 5rem;

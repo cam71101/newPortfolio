@@ -7,7 +7,7 @@ module.exports = {
 
   siteMetadata: {
     title: "David Fisher's Portfolio",
-    description: "This is David Fisher's portfolio site",
+    description: "This is David Fisher's web developer portfolio site",
     author: "@DavidFisher",
     twitterUsername: "@d_fisherWebDev",
     siteUrl: "https://d-fisher.com/",
@@ -15,9 +15,10 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "gatsby-plugin-page-transitions",
+      resolve: `gatsby-plugin-google-fonts`,
       options: {
-        transitionTime: 800,
+        fonts: [`karla`],
+        display: "swap",
       },
     },
     {
@@ -36,13 +37,13 @@ module.exports = {
         // exitEventName: "sal:out", // Exit event name
       },
     },
-    {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: [`karla`],
-        display: "swap",
-      },
-    },
+
+    // {
+    //   resolve: "gatsby-plugin-page-transitions",
+    //   options: {
+    //     transitionTime: 800,
+    //   },
+    // },
 
     // {
     //   resolve: `gatsby-plugin-global-styles`,
@@ -59,7 +60,20 @@ module.exports = {
     // "gatsby-plugin-material-ui",
     // `gatsby-theme-material-ui`,
     // "gatsby-plugin-layout",
-
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
@@ -190,20 +204,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/assets`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         name: `markdown-pages`,
         path: `${__dirname}/src/markdown-pages`,
       },
@@ -220,8 +220,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
+        name: `David Fisher's Portfolio`,
+        short_name: `David Fisher's Portfolio`,
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,

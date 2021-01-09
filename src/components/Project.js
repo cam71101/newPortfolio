@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import Image from "gatsby-image"
 import { Link } from "gatsby"
 
@@ -40,15 +39,6 @@ const Project = ({ description, title, image, link }) => {
       </div>
     </section>
   )
-}
-
-Project.propTypes = {
-  title: PropTypes.string.isRequired,
-  github: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  image: PropTypes.object.isRequired,
-  stack: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default Project

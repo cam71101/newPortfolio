@@ -21,7 +21,7 @@ export default function Index({ data }) {
       logoFixed={data.about.nodes[0].logo.childImageSharp.fixed}
       logoURL={data.about.nodes[0].logo.publicURL}
     >
-      <SEO title="Home" description="Home page" />
+      <SEO title="Home" description="David Fisher's Web Developer Portfolio" />
       <About data={data.about.nodes[0]} />
       <Projects projects={projects} />
       <Blogs data={data} showLink title={"Latest Blogs"} />

@@ -52,7 +52,7 @@ const IconComp = ({ title }) => {
 
   const weather = (
     <div>
-      <img src={OpenWeather} className="weather" />
+      <img src={OpenWeather} className="weather" alt="weather" />
     </div>
   )
 
